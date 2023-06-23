@@ -1,27 +1,15 @@
-import {useEffect, useState} from "react";
 import {Fact} from "../components/fact";
-import {fetchFact} from "../api";
+import {useFact} from "../components/queries/use-fact";
 
 export function Home() {
-    const [fact, setFact] = useState<string | null>();
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        loadFact();
-    }, [])
-
-    async function loadFact() {
-        setLoading(true);
-        setFact(await fetchFact());
-        setLoading(false);
-    }
+    const fact = useFact();
 
     return <main className="min-h-screen flex items-center justify-center bg-gray-900">
         <Fact
-            loading={loading}
-            onReload={loadFact}
+            loading={fact.isFetching}
+            onReload={() => fact.refetch()}
         >
-            {fact}
+            {fact.data}
         </Fact>
     </main>
 }
