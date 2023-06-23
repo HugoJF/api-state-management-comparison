@@ -1,0 +1,3 @@
+type MeowFactsApiResponse = {
+    data: string[];
+}
